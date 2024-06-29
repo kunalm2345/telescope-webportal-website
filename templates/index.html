@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatory</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top transparent-navbar">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/SEDSLOGO.png') }}" alt="Seds Celestia" width="80" height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="about-obs.html" id="about-button">About Observatory</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5 pt-5">
+        <div class="text-center">
+            <h2>Select Your Target</h2>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h3>Solar System</h3>
+                <div class="card mb-3">
+                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Moon">
+                    <div class="card-body">
+                        <h5 class="card-title">Moon</h5>
+                        <button id="Moon" class="btn btn-primary observe">Observe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>Star and Nebulae</h3>
+                <div class="card mb-3">
+                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <div class="card-body">
+                        <h5 class="card-title">Sun</h5>
+                        <button id="Nebulae" class="btn btn-primary observe">Observe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>Star and Nebulae</h3>
+                <div class="card mb-3">
+                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <div class="card-body">
+                        <h5 class="card-title">Sun</h5>
+                        <button id="obs" class="btn btn-primary observe">Observe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupLabel">Enter Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="observation-form">
+                        <div class="form-group">
+                            <label for="exposure">Exposure Time:</label>
+                            <select id="target" name="target" class="form-control">
+                                <option value="1">1 sec</option>
+                                <option value="2">2 sec</option>
+                                <option value="3">3 sec</option>
+                                <!-- Options will be updated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email ID:</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer transparent-footer py-3 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col text-left">
+                    <span class="text-muted">© 2024 SEDS Celestia. All rights reserved.</span>
+                </div>
+                <div class="col text-right">
+                    <img src="{{ url_for('static', filename='images/bits-logo.png') }}" alt="SEDS Celestia" width="30" height="10">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- GSAP JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/backend.js') }}"></script>
+</body>
+</html>
