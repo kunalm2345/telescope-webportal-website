@@ -79,6 +79,19 @@ h2, h3 {
     border-radius: 10px;
 }
 
+#team-button {
+    background-color: transparent;
+    color: #007bff;
+    transition: background-color 0.5s, color 0.5s, border-radius 0.5s;
+}
+
+#team-button:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+}
+
+
 .observe {
     background-color: #007bff;
     color: #fff;
@@ -107,3 +120,5 @@ h2, h3 {
     position: relative;
     z-index: 2;
 }
+
+

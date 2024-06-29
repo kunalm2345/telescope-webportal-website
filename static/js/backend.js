@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     aboutButton.addEventListener('mouseenter', function() {
         gsap.to(aboutButton, {
-            duration: 1,
+            duration: 0.1,
             backgroundColor: "#007bff",
             color: "#fff",
             borderRadius: "10px",
@@ -39,7 +39,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     aboutButton.addEventListener('mouseleave', function() {
         gsap.to(aboutButton, {
-            duration: 1,
+            duration: 0.1,
+            backgroundColor: "transparent",
+            color: "#007bff",
+            borderRadius: "0px",
+            ease: "power2.out"
+        });
+    });
+
+    // GSAP animation for the Team button
+    const teamButton = document.getElementById('team-button');
+
+    teamButton.addEventListener('mouseenter', function() {
+        gsap.to(teamButton, {
+            duration: 0.1,
+            backgroundColor: "#007bff",
+            color: "#fff",
+            borderRadius: "10px",
+            ease: "power2.out"
+        });
+    });
+
+    teamButton.addEventListener('mouseleave', function() {
+        gsap.to(teamButton, {
+            duration: 0.1,
             backgroundColor: "transparent",
             color: "#007bff",
             borderRadius: "0px",
@@ -47,3 +70,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+

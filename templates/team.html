@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observatory</title>
+    <title>Team</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -33,73 +33,35 @@
     <!-- Main Content -->
     <div class="container mt-5 pt-5">
         <div class="text-center">
-            <h2>Select Your Target</h2>
+            <h2>Meet Our Team</h2>
         </div>
         <div class="row mt-4">
+            <!-- Add team members here -->
             <div class="col-md-4">
-                <h3>Solar System</h3>
                 <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Moon">
+                    <img src="{{ url_for('static', filename='images/team/member1.jpg') }}" class="card-img-top" alt="Member 1">
                     <div class="card-body">
-                        <h5 class="card-title">Moon</h5>
-                        <button id="Moon" class="btn btn-primary observe">Observe</button>
+                        <h5 class="card-title">Member 1</h5>
+                        <p class="card-text">Description of member 1.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Star and Nebulae</h3>
                 <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <img src="{{ url_for('static', filename='images/team/member2.jpg') }}" class="card-img-top" alt="Member 2">
                     <div class="card-body">
-                        <h5 class="card-title">Sun</h5>
-                        <button id="Nebulae" class="btn btn-primary observe">Observe</button>
+                        <h5 class="card-title">Member 2</h5>
+                        <p class="card-text">Description of member 2.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Star and Nebulae</h3>
                 <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <img src="{{ url_for('static', filename='images/team/member3.jpg') }}" class="card-img-top" alt="Member 3">
                     <div class="card-body">
-                        <h5 class="card-title">Sun</h5>
-                        <button id="obs" class="btn btn-primary observe">Observe</button>
+                        <h5 class="card-title">Member 3</h5>
+                        <p class="card-text">Description of member 3.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="popupLabel">Enter Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="observation-form">
-                        <div class="form-group">
-                            <label for="exposure">Exposure Time:</label>
-                            <select id="target" name="target" class="form-control">
-                                <option value="1">1 sec</option>
-                                <option value="2">2 sec</option>
-                                <option value="3">3 sec</option>
-                                <!-- Options will be updated dynamically -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email ID:</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
                 </div>
             </div>
         </div>
