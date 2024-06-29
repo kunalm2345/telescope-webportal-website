@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/backdrop6.jpeg');
+    background-image: url('../images/backdrop6.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -33,7 +33,7 @@ h2, h3 {
 
 .card-img-top {
     width: 100%;
-    height: 200px;
+    height: 75%;
     object-fit: cover;
 }
 
@@ -42,8 +42,8 @@ h2, h3 {
 }
 
 .footer.transparent-footer {
-    background-color: rgba(0, 0, 0, 0.7); /* Blackish tint with transparency */
-    color: white;
+    background-color: rgba(225, 225, 225); /* Blackish tint with transparency */
+    color: black;
 }
 
 .footer img {
