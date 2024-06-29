@@ -24,7 +24,7 @@
                     <a class="nav-link mr-3" href="{{ url_for('team') }}" id="team-button">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mr-3" href="https://skyblazeastronomy.wixsite.com/agastya/team-4" target="_blank" rel="noopener noreferrer" id="about-button" >About Observatory</a>
+                    <a class="nav-link mr-3" href="https://skyblazeastronomy.wixsite.com/agastya/team-4" target="_blank" rel="noopener noreferrer" id="about-button">About Observatory</a>
                 </li>
             </ul>
         </div>
@@ -35,9 +35,12 @@
         <div class="text-center">
             <h2>Select Your Target</h2>
         </div>
+        <!-- Solar System Section -->
         <div class="row mt-4">
-            <div class="col-md-4">
+            <div class="col-12">
                 <h3>Solar System</h3>
+            </div>
+            <div class="col-md-4">
                 <div class="card mb-3">
                     <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Moon">
                     <div class="card-body">
@@ -47,25 +50,40 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Star and Nebulae</h3>
                 <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <img src="{{ url_for('static', filename='images/objects/sun.jpg') }}" class="card-img-top" alt="Sun">
                     <div class="card-body">
                         <h5 class="card-title">Sun</h5>
-                        <button id="Nebulae" class="btn btn-primary observe">Observe</button>
+                        <button id="Sun" class="btn btn-primary observe">Observe</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more Solar System objects as needed -->
+        </div>
+        <!-- Nebulae Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Nebulae</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img src="{{ url_for('static', filename='images/objects/orion_nebula.jpg') }}" class="card-img-top" alt="Orion Nebula">
+                    <div class="card-body">
+                        <h5 class="card-title">Orion Nebula</h5>
+                        <button id="Orion_Nebula" class="btn btn-primary observe">Observe</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Star and Nebulae</h3>
                 <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/objects/moon.jpg') }}" class="card-img-top" alt="Sun">
+                    <img src="{{ url_for('static', filename='images/objects/helix_nebula.jpg') }}" class="card-img-top" alt="Helix Nebula">
                     <div class="card-body">
-                        <h5 class="card-title">Sun</h5>
-                        <button id="obs" class="btn btn-primary observe">Observe</button>
+                        <h5 class="card-title">Helix Nebula</h5>
+                        <button id="Helix_Nebula" class="btn btn-primary observe">Observe</button>
                     </div>
                 </div>
             </div>
+            <!-- Add more Nebulae objects as needed -->
         </div>
     </div>
 
