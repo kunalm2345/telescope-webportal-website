@@ -1,128 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top transparent-navbar">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-            <img src="{{ url_for('static', filename='images/SEDSLOGO.png') }}" alt="Seds Celestia" width="80" height="50">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto text-center">
-                <li class="nav-item">
-                    <a class="nav-link mr-3" href="{{ url_for('team') }}" id="team-button">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mr-3" href="https://skyblazeastronomy.wixsite.com/agastya/team-4" target="_blank" rel="noopener noreferrer" id="about-button" >About Observatory</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <!-- Main Content -->
-    <div class="container mt-5 pt-5">
-        <div class="text-center">
-            <h2>Meet Our Team</h2>
-        </div>
-        <!-- Team Lead Section -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <h3>Team Lead</h3>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/team/lead.jpg') }}" class="card-img-top" alt="Team Lead">
-                    <div class="card-body">
-                        <h5 class="card-title">Team Lead Name</h5>
-                        <p class="card-text">Description of the team lead.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Frontend Team Section -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <h3>Frontend Team</h3>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/team/frontend1.jpg') }}" class="card-img-top" alt="Frontend Member 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Frontend Member 1</h5>
-                        <p class="card-text">Description of frontend member 1.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/team/frontend2.jpg') }}" class="card-img-top" alt="Frontend Member 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Frontend Member 2</h5>
-                        <p class="card-text">Description of frontend member 2.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Add more frontend members as needed -->
-        </div>
-        <!-- Backend Team Section -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <h3>Backend Team</h3>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/team/backend1.jpg') }}" class="card-img-top" alt="Backend Member 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Backend Member 1</h5>
-                        <p class="card-text">Description of backend member 1.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="{{ url_for('static', filename='images/team/backend2.jpg') }}" class="card-img-top" alt="Backend Member 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Backend Member 2</h5>
-                        <p class="card-text">Description of backend member 2.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Add more backend members as needed -->
-        </div>
+{% block content %}
+<div class="container pt-5">
+    <div class="text-center w-75 mx-auto my-5 py-5">
+        <h1 class="display-5 fw-bold">Control BITS Goa's Observation Telescope</h1>
+        <p class="fs-5">SEDS Celestia has opened access to our automated observation telescope to every BITS student. Through this webportal, you can select a target object and exposure settings and schedule a picture to be taken and sent to your BITS email.</p>
     </div>
+    <div class="row">
 
-    <!-- Footer -->
-    <footer class="footer transparent-footer py-3 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col text-left">
-                    <span class="text-muted">© 2024 SEDS Celestia. All rights reserved.</span>
+        <div class="col-10 mx-auto">
+            
+            <div class="row justify-content-between mb-5 pb-5">
+                <div class="col-3">
+                    <h2 class="font-monospace fw-bold fs-5 text-gray text-uppercase">Telescope Automation Team</h2>
+                    <ul class="fs-5">
+                        <li>Gyan Thammaiah</li>
+                        <li>Pranav</li>
+                    </ul>
                 </div>
-                <div class="col text-right">
-                    <img src="{{ url_for('static', filename='images/bits-logo.png') }}" alt="SEDS Celestia" width="30" height="10">
+                <div class="col-3">
+                    <h2 class="font-monospace fw-bold fs-5 text-gray text-uppercase">Database and Scheduling Team</h2>
+                    <ul class="fs-5">
+                        <li>Gyan Thammaiah</li>
+                        <li>Pranav</li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h2 class="font-monospace fw-bold fs-5 text-gray text-uppercase">Webportal Team</h2>
+                    <ul class="fs-5">
+                        <li>Gyan Thammaiah</li>
+                        <li>Pranav</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </footer>
+            
+            <br class="my-5 pb-5">
+            <br class="my-5 pb-5">
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- GSAP JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/backend.js') }}"></script>
-</body>
-</html>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
