@@ -1,119 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observatory</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top transparent-navbar">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-            <img src="{{ url_for('static', filename='images/SEDSLOGO.png') }}" alt="Seds Celestia" width="80" height="50">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto text-center">
-                <li class="nav-item">
-                    <a class="nav-link mr-3" href="{{ url_for('team') }}" id="team-button">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mr-3" href="https://skyblazeastronomy.wixsite.com/agastya/team-4" target="_blank" rel="noopener noreferrer" id="about-button">About Observatory</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <!-- Main Content -->
-    <div class="container mt-5 pt-5">
-        <div class="text-center">
-            <h2>Select Your Target</h2>
-        </div>
-        <div class="container">
-            {% for category, objects in arranged_data.items() %}
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <h3>{{ category }}</h3>
-                    </div>
-                    {% for object, image_url in objects.items() %}
-                        <div class="col-md-4">
-                            <div class="card mb-3">
-                                <img src="{{ image_url }}" class="card-img-top" alt="{{ object }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ object }}</h5>
-                                    <button id="{{ object }}" class="btn btn-primary observe">Observe</button>
-                                </div>
+{% block content %}
+<div class="container pt-5">
+    <div class="text-center w-75 mx-auto my-5 py-5">
+        <h1 class="display-5 fw-bold">Control BITS Goa's Observation Telescope</h1>
+        <p class="fs-5">SEDS Celestia has opened access to our automated observation telescope to every BITS student. Through this webportal, you can select a target, exposure settings</p>
+    </div>
+    <div class="container">
+
+        <h2 class="relative"><span class="font-monospace fs-5 text-gray me-2">STEP 1</span> Select a target</h2>
+
+        {% for category, objects in arranged_data.items() %}
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h3 class="font-monospace fw-bold fs-5 text-gray me-2 my-3 text-uppercase">{{ category }}</h3>
+                </div>
+                {% for object, image_url in objects.items() %}
+                    <div class="col-md-4">
+                        <div class="card mb-3 w-75 h-100">
+                            <img src="{{ image_url }}" class="card-img-top object-fit-cover" alt="{{ object }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ object }}</h5>
+                                <button id="{{ object }}" class="btn btn-secondary observe">Observe</button>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="popupLabel">Enter Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="observation-form">
-                        <div class="form-group">
-                            <label for="exposure">Exposure Time:</label>
-                            <select id="target" name="target" class="form-control">
-                                <option value="1">1 sec</option>
-                                <option value="2">2 sec</option>
-                                <option value="3">3 sec</option>
-                                <!-- Options will be updated dynamically -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email ID:</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+<!-- Modal -->
+<div class="modal fade" id="popup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="popupLabel">Enter Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="observation-form">
+                    <div class="form-group">
+                        <label for="exposure">Exposure Time:</label>
+                        <select id="target" name="target" class="form-control">
+                            <option value="1">1 sec</option>
+                            <option value="2">2 sec</option>
+                            <option value="3">3 sec</option>
+                            <!-- Options will be updated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email ID:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
-    <!-- Footer -->
-    <footer class="footer transparent-footer py-3 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col text-left">
-                    <span class="">© 2024 SEDS Celestia. All rights reserved.</span>
-                </div>
-                <div class="col text-right">
-                    <img src="{{ url_for('static', filename='images/bits-logo.png') }}" alt="SEDS Celestia" width="30" height="10">
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- GSAP JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/backend.js') }}"></script>
-</body>
-</html>

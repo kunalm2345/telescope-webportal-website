@@ -1,10 +1,10 @@
 body {
-    background-image: url('../images/backdrop6.jpg');
+    /* background-image: url('../images/backdrop6.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     padding-top: 70px; /* Adjust based on header height */
-    color: #ffffff; /* Set default text color to white */
+    /* color: #ffffff; Set default text color to white */
 }
 
 .navbar.transparent-navbar {
@@ -20,26 +20,26 @@ body {
     filter: brightness(0) invert(1); /* Adjust logo if needed */
 }
 
-h2, h3 {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow to text for better readability */
-    color: #ffffff; /* Ensure headers are white */
-}
+/* h2, h3 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+    color: #ffffff; 
+} */
 
 .card {
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Blackish tint with transparency */
-    color: white; /* Ensure card text is white */
-}
+    /* margin-bottom: 20px; */
+    background-color: rgba(0, 0, 0, 0); 
+    color: white; 
+} */
 
-.card-img-top {
+/* .card-img-top {
     width: 100%;
     height: 75%;
     object-fit: cover;
-}
+} */
 
-.card-body {
-    background-color: rgba(255, 255, 255, 0.1); /* Light background for card body for contrast */
-}
+/* .card-body {
+    background-color: rgba(255, 255, 255, 0.1);
+} */
 
 .footer.transparent-footer {
     background-color: rgba(225, 225, 225); /* Blackish tint with transparency */
