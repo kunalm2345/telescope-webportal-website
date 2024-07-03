@@ -5,6 +5,8 @@ import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
+from datetime import datetime, timedelta, timezone
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
@@ -25,13 +27,14 @@ class DataForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Submit')
 
-# Define the database model
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     exposure_time = db.Column(db.String(80), nullable=False)
     obj = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False)
+    request_date = db.Column(db.Date, nullable=False, default=datetime.now().date())
+    request_time = db.Column(db.Time, nullable=False, default=datetime.now().time())
 
     def __repr__(self):
         return f'<Data {self.name} - {self.obj}>'
@@ -64,12 +67,17 @@ def send():
     exposure_time = request.form.get('exposure')
     obj = request.form.get('object')
     email = request.form.get('email')
+    ist_offset = timedelta(hours=5, minutes=30)
+    ist_timezone = timezone(ist_offset)
+    current_datetime = datetime.now(ist_timezone)
 
-    new_data = Data(name=name, exposure_time=exposure_time, obj=obj, email=email)
+    new_data = Data(name=name, exposure_time=exposure_time, obj=obj, email=email, request_date=current_datetime.date(), request_time=current_datetime.time())
     db.session.add(new_data)
     db.session.commit()
 
     return jsonify({'message': 'Data added successfully!'})
+
+
 
 @app.route('/team/')
 def team():
