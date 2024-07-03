@@ -42,11 +42,14 @@
                 <input type="radio" class="btn-check" id="1" name="exposure" value="1" autocomplete="off">
                 <label for="1" class="btn btn-lg btn-dark">1 Sec</label>
 
-                <input type="radio" class="btn-check" id="2" name="exposure" value="2" autocomplete="off">
-                <label for="2" class="btn btn-lg btn-dark mx-3">2 Sec</label>
+                <input type="radio" class="btn-check" id="2" name="exposure" value="10" autocomplete="off">
+                <label for="2" class="btn btn-lg btn-dark mx-3">10 Sec</label>
 
-                <input type="radio" class="btn-check" id="3" name="exposure" value="3" autocomplete="off">
-                <label for="3" class="btn btn-dark btn-lg">3 Sec</label>
+                <input type="radio" class="btn-check" id="3" name="exposure" value="15" autocomplete="off">
+                <label for="3" class="btn btn-dark btn-lg">15 Sec</label>
+
+                <input type="radio" class="btn-check" id="3" name="exposure" value="30" autocomplete="off">
+                <label for="3" class="btn btn-dark btn-lg">30 Sec</label>
             </div>
 
             <br class="mt-5">
@@ -97,7 +100,22 @@ function validateForm() {
         alert("BITS Email must be entered");
         return false;
     }
+    sendData();
+    return false;
 }
+
+function sendData() {
+    let formData = new FormData(document.forms["theform"]);
+    fetch("/send/", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("Data will be sent to your email in 1-2 days.");
+        window.location.href = "/";
+    })
+    .catch(error => console.error("Error:", error)); }
 </script>
 {% endblock %}
 

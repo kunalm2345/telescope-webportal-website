@@ -1,8 +1,40 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 import requests
+from flask_sqlalchemy import SQLAlchemy
+import os
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
+
+# Configuration
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+
+# Define the form
+class DataForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    exposure_time = StringField('Exposure Time', validators=[DataRequired()])
+    obj = StringField('Object', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Submit')
+
+# Define the database model
+class Data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    exposure_time = db.Column(db.String(80), nullable=False)
+    obj = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+
+    def __repr__(self):
+        return f'<Data {self.name} - {self.obj}>'
 
 def arrange_data(data):
     result = {}
@@ -28,12 +60,23 @@ def home():
 
 @app.route('/send/', methods=['POST'])
 def send():
-    return request.form
+    name = request.form.get('name')
+    exposure_time = request.form.get('exposure')
+    obj = request.form.get('object')
+    email = request.form.get('email')
+
+    new_data = Data(name=name, exposure_time=exposure_time, obj=obj, email=email)
+    db.session.add(new_data)
+    db.session.commit()
+
+    return jsonify({'message': 'Data added successfully!'})
 
 @app.route('/team/')
 def team():
     return render_template('team.html')
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
 
