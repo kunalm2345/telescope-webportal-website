@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, jsonify
 import requests
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -7,17 +7,14 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
 from datetime import datetime, timedelta, timezone
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 
-# Configuration
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+# Configuration for MySQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:kali@localhost/telescope'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
 
 # Define the form
 class DataForm(FlaskForm):
@@ -28,13 +25,15 @@ class DataForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class Data(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    exposure_time = db.Column(db.String(80), nullable=False)
-    obj = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    request_date = db.Column(db.Date, nullable=False, default=datetime.now().date())
-    request_time = db.Column(db.Time, nullable=False, default=datetime.now().time())
+    __tablename__ = 'webportal'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), nullable=False)
+    exposure_time = db.Column(db.Time)
+    object = db.Column(db.String(255))
+    email = db.Column(db.String(255))
+    request_date = db.Column(db.Date)
+    request_time = db.Column(db.Time)
+    is_mail_sent = db.Column(db.Boolean, default=False, nullable=False)
 
     def __repr__(self):
         return f'<Data {self.name} - {self.obj}>'
@@ -65,19 +64,25 @@ def home():
 def send():
     name = request.form.get('name')
     exposure_time = request.form.get('exposure')
-    obj = request.form.get('object')
+    object = request.form.get('object')
     email = request.form.get('email')
     ist_offset = timedelta(hours=5, minutes=30)
     ist_timezone = timezone(ist_offset)
     current_datetime = datetime.now(ist_timezone)
 
-    new_data = Data(name=name, exposure_time=exposure_time, obj=obj, email=email, request_date=current_datetime.date(), request_time=current_datetime.time())
+    new_data = Data(
+        name=name, 
+        exposure_time=exposure_time, 
+        object=object, 
+        email=email, 
+        request_date=current_datetime.date(), 
+        request_time=current_datetime.time(),
+        is_mail_sent=False  # Set default value for is_mail_sent to False
+    )
     db.session.add(new_data)
     db.session.commit()
 
     return jsonify({'message': 'Data added successfully!'})
-
-
 
 @app.route('/team/')
 def team():
@@ -87,4 +92,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
