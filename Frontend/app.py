@@ -194,14 +194,12 @@ def send():
 
         # Convert exposure time to TIME format
         try:
-            # Format as HH:MM:SS
             exposure_seconds = int(exposure_time)
             hours = exposure_seconds // 3600
             minutes = (exposure_seconds % 3600) // 60
             seconds = exposure_seconds % 60
             formatted_time = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
         except ValueError:
-            # If conversion fails, use exposure_time as is
             formatted_time = exposure_time
 
         new_data = Data(
@@ -218,7 +216,10 @@ def send():
         db.session.add(new_data)
         db.session.commit()
         
-        return jsonify({'message': 'Data added successfully!'}), 200
+        return jsonify({
+            'message': 'Data added successfully!',
+            'id': new_data.id
+        }), 200
     except Exception as e:
         db.session.rollback()
         app.logger.error(f"Error saving data: {str(e)}")
@@ -227,6 +228,22 @@ def send():
 @app.route('/team/')
 def team():
     return render_template('team.html')
+
+@app.route('/photos/')
+def photos():
+    # Get last 10 requests that have images (excluding default /image path)
+    photos = Data.query.filter(Data.image_path != '/image')\
+                      .order_by(Data.id.desc())\
+                      .limit(10)\
+                      .all()
+    return render_template('photos.html', photos=photos)
+
+@app.route('/done/<int:id>')
+def done(id):
+    data = Data.query.get_or_404(id)
+    if data.image_path and data.image_path != '/image':
+        return render_template('done.html', image_url=data.image_path)
+    return render_template('done.html', message="Your image will be ready in 1-2 days. Please check your email.")
 
 if __name__ == '__main__':
     with app.app_context():

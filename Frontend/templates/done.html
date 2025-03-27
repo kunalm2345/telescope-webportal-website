@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container pt-5">
+    <div class="text-center">
+        {% if image_url %}
+            <h2 class="mb-4">Your Image is Ready!</h2>
+            <img src="{{ image_url }}" alt="Captured telescope image" class="img-fluid rounded shadow">
+        {% else %}
+            <h2 class="mb-4">Request Received</h2>
+            <p class="lead">{{ message }}</p>
+            <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

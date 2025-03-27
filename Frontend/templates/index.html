@@ -113,7 +113,8 @@ function sendData() {
     .then(data => {
         console.log("Success:", data);
         alert("Data will be sent to your email in 1-2 days.");
-        window.location.href = "/";
+        // Redirect to /done/<id> instead of root
+        window.location.href = `/done/${data.id}`;
     })
     .catch(error => {
         console.error("Error:", error);

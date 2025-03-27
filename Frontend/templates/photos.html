@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center text-white mb-5">Recent Captures</h1>
+    
+    <div class="row g-4">
+        {% for photo in photos %}
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card h-100 bg-dark text-white">
+                <img src="{{ photo.image_path }}" 
+                     class="card-img-top" 
+                     alt="Telescope capture of {{ photo.object }}"
+                     style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ photo.object }}</h5>
+                    <p class="card-text">Captured by {{ photo.name }}</p>
+                    <p class="card-text"><small class="text-muted">{{ photo.request_date.strftime('%B %d, %Y') }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center text-white">
+            <p>No photos available yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

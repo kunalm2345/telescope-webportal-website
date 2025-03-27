@@ -17,9 +17,8 @@
         }
     </style>
 </head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark transparent-navbar bg-dark opacity-75 px-3 px-lg-5">
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ url_for('home') }}">
             <img src="{{ url_for('static', filename='images/SEDSLOGO.png') }}" alt="Seds Celestia" class="img-fluid h-auto" width="80">
         </a>
@@ -28,6 +27,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto text-center">
+                <li class="nav-item">
+                    <a class="nav-link me-3" href="{{ url_for('photos') }}" id="photos-button">Gallery</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link me-3" href="{{ url_for('team') }}" id="team-button">Team</a>
                 </li>
@@ -38,11 +40,11 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    {% block content %}{% endblock %}
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer bg-dark py-3 px-5 mt-5">
+    <footer class="footer mt-auto py-3 bg-dark text-light">
         <div>
             <div class="row align-items-center">
                 <div class="col-9 text-start text-white">
