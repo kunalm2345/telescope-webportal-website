@@ -103,16 +103,24 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
 from datetime import datetime, timedelta, timezone
 import dotenv
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 dotenv.load_dotenv("../.env")
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecretkey'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mysecretkey')
 
 # Configuration for MySQL using environment variables
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{os.environ["MYSQL_USER"]}:{os.environ["MYSQL_PASSWORD"]}@{os.environ["DB_HOST"]}/{os.environ["DB_NAME"]}'
+connection_string = f'mysql+pymysql://{os.environ.get("MYSQL_USER")}:{os.environ.get("MYSQL_PASSWORD")}@{os.environ.get("DB_HOST")}/{os.environ.get("DB_NAME")}'
+app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+logger.info(f"Connecting to database at {os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}")
 
 db = SQLAlchemy(app)
 
@@ -166,28 +174,55 @@ def home():
 
 @app.route('/send/', methods=['POST'])
 def send():
-    name = request.form.get('name')
-    exposure_time = request.form.get('exposure')
-    object = request.form.get('object')
-    email = request.form.get('email')
-    ist_offset = timedelta(hours=5, minutes=30)
-    ist_timezone = timezone(ist_offset)
-    current_datetime = datetime.now(ist_timezone)
+    try:
+        name = request.form.get('name')
+        exposure_time = request.form.get('exposure')
+        object_name = request.form.get('object')
+        email = request.form.get('email')
+        
+        # Validate required fields
+        if not all([name, exposure_time, object_name, email]):
+            return jsonify({'error': 'All fields are required'}), 400
+            
+        # Verify email domain (optional)
+        if not email.endswith('bits-pilani.ac.in'):
+            return jsonify({'error': 'Please use a BITS email address'}), 400
+            
+        ist_offset = timedelta(hours=5, minutes=30)
+        ist_timezone = timezone(ist_offset)
+        current_datetime = datetime.now(ist_timezone)
 
-    new_data = Data(
-        name=name, 
-        exposure_time=exposure_time, 
-        object=object, 
-        email=email, 
-        request_date=current_datetime.date(), 
-        request_time=current_datetime.time(),
-        status='not captured',  # Default value for status
-        image_path='/image'  # Default value for image_path
-    )
-    db.session.add(new_data)
-    db.session.commit()
+        # Convert exposure time to TIME format
+        try:
+            # Format as HH:MM:SS
+            exposure_seconds = int(exposure_time)
+            hours = exposure_seconds // 3600
+            minutes = (exposure_seconds % 3600) // 60
+            seconds = exposure_seconds % 60
+            formatted_time = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+        except ValueError:
+            # If conversion fails, use exposure_time as is
+            formatted_time = exposure_time
 
-    return jsonify({'message': 'Data added successfully!'})
+        new_data = Data(
+            name=name, 
+            exposure_time=formatted_time, 
+            object=object_name, 
+            email=email, 
+            request_date=current_datetime.date(), 
+            request_time=current_datetime.time(),
+            status='not captured',
+            image_path='/image'
+        )
+        
+        db.session.add(new_data)
+        db.session.commit()
+        
+        return jsonify({'message': 'Data added successfully!'}), 200
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f"Error saving data: {str(e)}")
+        return jsonify({'error': 'An error occurred while processing your request'}), 500
 
 @app.route('/team/')
 def team():

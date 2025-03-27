@@ -96,16 +96,29 @@ function validateForm() {
 
 function sendData() {
     let formData = new FormData(document.forms["theform"]);
+    
     fetch("/send/", {
         method: "POST",
-        body: formData
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log("Success:", data);
         alert("Data will be sent to your email in 1-2 days.");
         window.location.href = "/";
     })
-    .catch(error => console.error("Error:", error));
+    .catch(error => {
+        console.error("Error:", error);
+        alert("There was an error submitting your request. Please try again.");
+    });
 }
 </script>
 {% endblock %}
