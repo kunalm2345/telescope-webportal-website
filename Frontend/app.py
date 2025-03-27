@@ -102,12 +102,16 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
 from datetime import datetime, timedelta, timezone
+import dotenv
+
+# Load environment variables
+dotenv.load_dotenv("../.env")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 
-# Configuration for MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:kali@localhost/telescope'
+# Configuration for MySQL using environment variables
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{os.environ["MYSQL_USER"]}:{os.environ["MYSQL_PASSWORD"]}@{os.environ["DB_HOST"]}/{os.environ["DB_NAME"]}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -156,6 +160,7 @@ def home():
     # data = response.json()
 
     data = [{"Object":"Moon","Category":"Solar System","Image link":"https://c02.purpledshub.com/uploads/sites/48/2019/04/The-Moon-fafa62f.jpg?w=1029&webp=1"},{"Object":"Sun","Category":"Nebulae","Image link":"https://www.quantamagazine.org/wp-content/uploads/2018/07/SolarFull_SeanDoran_2880FullwidthLede.jpg"},{"Object":"Saturn","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn4","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn3","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn2","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"}]
+    
     arranged_data = arrange_data(data)
     return render_template('index.html', arranged_data=arranged_data)
 
