@@ -151,9 +151,11 @@ def arrange_data(data):
 
 @app.route('/')
 def home():
-    url = 'https://opensheet.elk.sh/15x9oFZtisE5Bl3s3pc-pJvWzsIKkjzQnFPtz9gMTra4/Sheet1'
-    response = requests.get(url)
-    data = response.json()
+    # url = 'https://opensheet.elk.sh/15x9oFZtisE5Bl3s3pc-pJvWzsIKkjzQnFPtz9gMTra4/Sheet1'
+    # response = requests.get(url)
+    # data = response.json()
+
+    data = [{"Object":"Moon","Category":"Solar System","Image link":"https://c02.purpledshub.com/uploads/sites/48/2019/04/The-Moon-fafa62f.jpg?w=1029&webp=1"},{"Object":"Sun","Category":"Nebulae","Image link":"https://www.quantamagazine.org/wp-content/uploads/2018/07/SolarFull_SeanDoran_2880FullwidthLede.jpg"},{"Object":"Saturn","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn4","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn3","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"},{"Object":"Saturn2","Category":"Solar System","Image link":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"}]
     arranged_data = arrange_data(data)
     return render_template('index.html', arranged_data=arranged_data)
 

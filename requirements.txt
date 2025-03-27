@@ -1,0 +1,6 @@
+flask
+flask-sqlalchemy
+flask-wtf
+wtforms
+requests
+mysql-connector-python
